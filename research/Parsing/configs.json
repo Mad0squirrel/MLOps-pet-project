@@ -1,0 +1,22 @@
+{
+    "url": "https://www.avito.ru/moskva/kvartiry/prodam-ASgBAgICAUSSA8YQ",
+    "file_name": "data.csv",
+    "params": {
+        "physical address": true,
+        "number of rooms": true,
+        "area of apartment": true,
+        "number of floors": true,
+        "apartment floor": true,
+        "price": true,
+        "link": true,
+        "repair": true,
+        "bathroom": true,
+        "view from the windows": true,
+        "terrace": true,
+        "year of construction": true,
+        "elevator": true,
+        "garbage chute": true,
+        "type of house": true,
+        "parking": true
+    }
+  }
