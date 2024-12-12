@@ -8,13 +8,15 @@ from research.Parsing.Page import Page
 
 
 class AvitoParser:
-    LOOP_DELAY = 5
+    LOOP_DELAY = 15
 
     def __init__(self):
         self.url = None
         self.file_name = None
+        self.cookies = None
+        self.headers = None
         self.params = None
-        self.has_headers = False
+        self.has_headers = True
         self.load_new_configs()
 
     def get_n_pages(self) -> int or None:
@@ -25,11 +27,24 @@ class AvitoParser:
         """
         try:
             request = requests.get(self.url)
+            if request.status_code != 200:
+                print(f"Ошибка при загрузке страницы. Статус: {request.status_code}")
+                return None
             html = request.text
             soup = bs4.BeautifulSoup(html, "lxml")
             list_page_buttons = soup.select_one("div.js-pages.pagination-pagination-Oz4Ri").select('span')
-            max_number_page = list_page_buttons[-2].text
-            return int(max_number_page)
+            page_numbers = []
+            for button in list_page_buttons:
+                try:
+                    page_numbers.append(int(button.text))
+                except ValueError:
+                    continue
+                
+            if not page_numbers:
+                print("Номера страниц не найдены")
+                return None
+        
+            return max(page_numbers)
         except requests.exceptions.ConnectionError:
             print("Отсутствует соединение")
             return None
@@ -60,21 +75,28 @@ class AvitoParser:
                 configs = json.load(read_f)
             self.url = configs['url']
             self.file_name = configs['file_name']
+            self.cookies = configs['cookies']
+            self.headers = configs['headers']
             self.params = configs['params']
         except FileNotFoundError:
             print("Отсутствует файл configs.json")
 
     def start(self) -> None:
         """
-        This function is main loop for collecting and saving data
+        This function is the main loop for collecting and saving data
         """
-        n_pages = range(self.get_n_pages())
+        n_pages = self.get_n_pages()
+        print(f"Количество страниц: {n_pages}")
         if not n_pages:
+            print("Ошибка: количество страниц не определено.")
             return
-        for number_page in n_pages:
+
+        for number_page in range(1, n_pages + 1):
+            print(f"Парсинг страницы {number_page} из {n_pages}")
             page = Page(self.url, number_page)
             data = page.get_data(self.params)
             if not data:
+                print(f"Ошибка при получении данных для страницы {number_page}. Останавливаю парсинг.")
                 return
             self.save_data(data)
             time.sleep(AvitoParser.LOOP_DELAY)

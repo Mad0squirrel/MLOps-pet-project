@@ -6,7 +6,7 @@ from research.Parsing.Post import Post
 
 
 class Page:
-    LOOP_DELAY = 7
+    LOOP_DELAY = 17
 
     def __init__(self, url, page_number):
         self.url = url
@@ -22,10 +22,10 @@ class Page:
             request = requests.get(self.url, params=dict(p=self.p_num))
             html = request.text
             soup = bs4.BeautifulSoup(html, "lxml")
-            blocks = soup.select("div.iva-item-content-UnQQ4")
+            blocks = soup.select("div.iva-item-content-OWwoq")
             urls = []
             for block in blocks:
-                url = block.select_one('div.iva-item-titleStep-_CxvN').select_one('a').get('href')
+                url = block.select_one('div.iva-item-titleStep-zichc').select_one('a').get('href')
                 urls.append(url)
             return urls
         except requests.exceptions.ConnectionError:
