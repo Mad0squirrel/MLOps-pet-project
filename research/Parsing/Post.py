@@ -1,23 +1,20 @@
+# Post.py
 from bs4 import BeautifulSoup
 import requests
-
 from research.Parsing.Handler import Distributor
 
 
 class Post:
     domain = "https://www.avito.ru"
 
-    def __init__(self, short_url):
+    def __init__(self, short_url, session, headers):
         self.short_url = short_url
+        self.session = session
+        self.headers = headers
 
     def get_data(self, params: dict) -> list:
-        """
-        This function returns data of one apartments
-        It uses parameters from params
-        Connection error will be handle on class Page
-        """
         full_url = Post.domain + self.short_url
-        request = requests.get(full_url)
+        request = self.session.get(full_url, headers=self.headers)
         print(full_url)
         if request.reason != 'OK':
             print("Возникла ошибка", request.reason)
@@ -34,3 +31,6 @@ class Post:
                 except AttributeError or TypeError:
                     key_storage[key] = None
         return list(key_storage.values())
+
+
+

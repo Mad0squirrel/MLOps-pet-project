@@ -111,6 +111,8 @@ class Distributor:
             return AboutApartmentBlockHandler("Тип дома:")
         elif self.key == "parking":
             return AboutApartmentBlockHandler("Парковка:")
+        elif self.key == "garbage chute":
+            return AboutApartmentBlockHandler("Мусоропровод:")
         else:
             print("Встречен параметр, у которого отсутствует обработчик, параметр:", self.key)
             return EmptyHandler()
