@@ -47,7 +47,7 @@ class EmptyHandler(AbstractHandler):
 
 class PhysAddressHandler(AbstractHandler):
     def get_info(self, soup: bs4.BeautifulSoup) -> str or None:
-        geo_block = soup.select_one("div.item-address")
+        geo_block = soup.select_one("span.style-item-address__string-wt61A")
         address = geo_block.text.strip().replace("\n", "|")
         return address
 
@@ -65,7 +65,6 @@ class ApartmentFloorHandler(AbstractHandler):
         text = soup.text
         index_begin_number, index_end_number = re.search(r"[\d]+/", text).span()
         return text[index_begin_number: index_end_number-1]
-
 
 class PriceHandler(AbstractHandler):
     def get_info(self, soup: bs4.BeautifulSoup) -> str or None:
@@ -111,8 +110,6 @@ class Distributor:
             return AboutApartmentBlockHandler("Тип дома:")
         elif self.key == "parking":
             return AboutApartmentBlockHandler("Парковка:")
-        elif self.key == "garbage chute":
-            return AboutApartmentBlockHandler("Мусоропровод:")
         else:
             print("Встречен параметр, у которого отсутствует обработчик, параметр:", self.key)
             return EmptyHandler()

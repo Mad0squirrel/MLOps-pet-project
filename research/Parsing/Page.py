@@ -7,17 +7,18 @@ from research.Parsing.Post import Post
 
 
 class Page:
-    LOOP_DELAY = 25  # Увеличено время задержки
+    LOOP_DELAY = 20
 
-    def __init__(self, url, page_number, session, headers):
+    def __init__(self, url, page_number, session, headers, proxies):
         self.url = url
         self.p_num = page_number
         self.session = session
         self.headers = headers
+        self.proxies = proxies
 
     def get_urls(self) -> list:
         try:
-            request = self.session.get(self.url, params=dict(p=self.p_num), headers=self.headers)
+            request = self.session.get(self.url, params=dict(p=self.p_num), headers=self.headers, proxies=self.proxies)
             html = request.text
             soup = bs4.BeautifulSoup(html, "lxml")
             blocks = soup.select("div.iva-item-content-OWwoq")
@@ -35,7 +36,7 @@ class Page:
         data = []
         for url in urls:
             try:
-                post = Post(url, self.session, self.headers)
+                post = Post(url, self.session, self.headers, self.proxies)
                 data.append(post.get_data(params))
                 delay = Page.LOOP_DELAY + random.uniform(1, 5)
                 time.sleep(delay)

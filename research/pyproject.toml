@@ -19,7 +19,6 @@ selectolax = "^0.3.27"
 selenium = "^4.27.1"
 bs4 = "^0.0.2"
 lxml = "^5.3.0"
-fake-useragent = "^0.1.11"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.4.4"

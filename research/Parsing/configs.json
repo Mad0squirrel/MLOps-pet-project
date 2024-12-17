@@ -1,6 +1,9 @@
 {
     "url": "https://www.avito.ru/moskva/kvartiry/prodam-ASgBAgICAUSSA8YQ",
     "file_name": "data.csv",
+    "proxies": {
+        "http": "http://185.10.129.14:3128"
+    },
     "cookies": {
         "__ddg1__": "Pp3ciHOpVTqL3FWdX0Vy",
         "_ym_uid": "1732629863940867991",
@@ -54,7 +57,7 @@
         "terrace": true,
         "year of construction": true,
         "elevator": true,
-        "garbage chute": true,
+        "garbage chute": false,
         "type of house": true,
         "parking": true
     }

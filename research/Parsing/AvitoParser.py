@@ -10,7 +10,7 @@ from research.Parsing.Page import Page
 
 
 class AvitoParser:
-    LOOP_DELAY = 25  # Увеличено время задержки
+    LOOP_DELAY = 20
 
     def __init__(self):
         self.url = None
@@ -18,15 +18,16 @@ class AvitoParser:
         self.cookies = None
         self.headers = None
         self.params = None
+        self.proxies = None
         self.has_headers = True
         self.load_new_configs()
-        self.session = requests.Session()  # Использование сессии для уменьшения нагрузки на сервер
+        self.session = requests.Session()
 
 
 
     def get_n_pages(self) -> int or None:
         try:
-            request = self.session.get(self.url, headers=self.headers)
+            request = self.session.get(self.url, headers=self.headers, proxies=self.proxies)
             if request.status_code != 200:
                 print(f"Ошибка при загрузке страницы. Статус: {request.status_code}")
                 return None
@@ -45,7 +46,7 @@ class AvitoParser:
             #     return None
 
             # return max(page_numbers)
-            return 10
+            return 3
         except requests.exceptions.ConnectionError:
             print("Отсутствует соединение")
             return None
@@ -72,6 +73,7 @@ class AvitoParser:
             self.cookies = configs['cookies']
             self.headers = configs['headers']
             self.params = configs['params']
+            self.proxies = configs['proxies']
         except FileNotFoundError:
             print("Отсутствует файл configs.json")
 
@@ -84,7 +86,7 @@ class AvitoParser:
 
         for number_page in range(1, n_pages + 1):
             print(f"Парсинг страницы {number_page} из {n_pages}")
-            page = Page(self.url, number_page, self.session, self.headers)
+            page = Page(self.url, number_page, self.session, self.headers, self.proxies)
             data = page.get_data(self.params)
             if not data:
                 print(f"Ошибка при получении данных для страницы {number_page}. Останавливаю парсинг.")

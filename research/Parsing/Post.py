@@ -7,14 +7,15 @@ from research.Parsing.Handler import Distributor
 class Post:
     domain = "https://www.avito.ru"
 
-    def __init__(self, short_url, session, headers):
+    def __init__(self, short_url, session, headers, proxies):
         self.short_url = short_url
         self.session = session
         self.headers = headers
+        self.proxies = proxies
 
     def get_data(self, params: dict) -> list:
         full_url = Post.domain + self.short_url
-        request = self.session.get(full_url, headers=self.headers)
+        request = self.session.get(full_url, headers=self.headers, proxies=self.proxies)
         print(full_url)
         if request.reason != 'OK':
             print("Возникла ошибка", request.reason)
