@@ -14,15 +14,11 @@ class AboutApartmentBlockHandler(AbstractHandler):
         self.key_word = key_word
 
     def get_info(self, soup: bs4.BeautifulSoup) -> str or None:
-        # Найти все элементы списка параметров
         items = soup.select('ul.params-paramsList-_awNW > li')
         for item in items:
-            # Проверяем, содержит ли ключевой элемент текст ключевого слова
             key = item.find('span', class_='styles-module-noAccent-l9CMS')
             if key and self.key_word in key.text:
-                # Получаем текст элемента списка
                 full_text = item.get_text(separator=" ", strip=True)
-                # Удаляем ключевое слово и разделитель
                 cleaned_value = full_text.replace(self.key_word, "").strip(" : ")
                 return cleaned_value
         return None
@@ -33,15 +29,11 @@ class AboutHouseBlockHandler(AbstractHandler):
         self.key_word = key_word
 
     def get_info(self, soup: bs4.BeautifulSoup) -> str or None:
-        # Найти все элементы списка параметров
         items = soup.select('ul.params-paramsList-_awNW > li')
         for item in items:
-            # Проверяем, содержит ли ключевой элемент текст ключевого слова
             key = item.find('span', class_='styles-module-noAccent-l9CMS')
             if key and self.key_word in key.text:
-                # Получаем текст элемента списка
                 full_text = item.get_text(separator=" ", strip=True)
-                # Удаляем ключевое слово и разделитель
                 cleaned_value = full_text.replace(self.key_word, "").strip(" : ")
                 return cleaned_value
         return None

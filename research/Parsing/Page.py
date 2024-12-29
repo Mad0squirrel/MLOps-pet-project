@@ -1,4 +1,3 @@
-# Page.py
 import time
 import bs4
 import requests

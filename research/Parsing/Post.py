@@ -1,4 +1,3 @@
-# Post.py
 from bs4 import BeautifulSoup
 import requests
 from Parsing.Handler import Distributor

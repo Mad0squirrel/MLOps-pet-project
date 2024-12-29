@@ -1,4 +1,3 @@
-# AvitoParser.py
 import csv
 import time
 import json
@@ -92,5 +91,5 @@ class AvitoParser:
                 print(f"Ошибка при получении данных для страницы {number_page}. Останавливаю парсинг.")
                 return
             self.save_data(data)
-            delay = AvitoParser.LOOP_DELAY + random.uniform(1, 5)  # Случайная задержка для имитации активности человека
+            delay = AvitoParser.LOOP_DELAY + random.uniform(1, 5)
             time.sleep(delay)
