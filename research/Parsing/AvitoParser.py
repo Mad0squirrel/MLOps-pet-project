@@ -5,12 +5,12 @@ import json
 import requests
 import bs4
 import random
-from research.Parsing.Page import Page
+from Parsing.Page import Page
 
 
 
 class AvitoParser:
-    LOOP_DELAY = 20
+    LOOP_DELAY = 25
 
     def __init__(self):
         self.url = None
@@ -19,7 +19,7 @@ class AvitoParser:
         self.headers = None
         self.params = None
         self.proxies = None
-        self.has_headers = True
+        self.has_headers = False
         self.load_new_configs()
         self.session = requests.Session()
 
@@ -66,7 +66,7 @@ class AvitoParser:
 
     def load_new_configs(self) -> None:
         try:
-            with open("research/Parsing/configs.json", 'r') as read_f:
+            with open("Parsing/configs.json", 'r') as read_f:
                 configs = json.load(read_f)
             self.url = configs['url']
             self.file_name = configs['file_name']

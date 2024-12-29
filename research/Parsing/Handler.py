@@ -14,15 +14,18 @@ class AboutApartmentBlockHandler(AbstractHandler):
         self.key_word = key_word
 
     def get_info(self, soup: bs4.BeautifulSoup) -> str or None:
-        text = soup.text
-        if re.search(self.key_word, text) is None:
-            return None
-        else:
-            index_end_of_string = re.search(self.key_word, text).span()[1]
-            index_end_of_line = re.search("\n", text[index_end_of_string:]).span()[0] + index_end_of_string
-            data = text[index_end_of_string: index_end_of_line]
-            data = data.replace("\xa0", " ")
-            return data.strip()
+        # Найти все элементы списка параметров
+        items = soup.select('ul.params-paramsList-_awNW > li')
+        for item in items:
+            # Проверяем, содержит ли ключевой элемент текст ключевого слова
+            key = item.find('span', class_='styles-module-noAccent-l9CMS')
+            if key and self.key_word in key.text:
+                # Получаем текст элемента списка
+                full_text = item.get_text(separator=" ", strip=True)
+                # Удаляем ключевое слово и разделитель
+                cleaned_value = full_text.replace(self.key_word, "").strip(" : ")
+                return cleaned_value
+        return None
 
 
 class AboutHouseBlockHandler(AbstractHandler):
@@ -30,14 +33,18 @@ class AboutHouseBlockHandler(AbstractHandler):
         self.key_word = key_word
 
     def get_info(self, soup: bs4.BeautifulSoup) -> str or None:
-        text = soup.text
-        if re.search(self.key_word, text) is None:
-            return None
-        else:
-            index_end_of_string = re.search(self.key_word, text).span()[1]
-            index_end_of_line = re.search("\n", text[index_end_of_string:]).span()[0] + index_end_of_string
-            data = text[index_end_of_string: index_end_of_line]
-            return data.strip()
+        # Найти все элементы списка параметров
+        items = soup.select('ul.params-paramsList-_awNW > li')
+        for item in items:
+            # Проверяем, содержит ли ключевой элемент текст ключевого слова
+            key = item.find('span', class_='styles-module-noAccent-l9CMS')
+            if key and self.key_word in key.text:
+                # Получаем текст элемента списка
+                full_text = item.get_text(separator=" ", strip=True)
+                # Удаляем ключевое слово и разделитель
+                cleaned_value = full_text.replace(self.key_word, "").strip(" : ")
+                return cleaned_value
+        return None
 
 
 class EmptyHandler(AbstractHandler):
@@ -83,9 +90,9 @@ class Distributor:
         if self.key == "physical address":
             return PhysAddressHandler()
         elif self.key == "number of rooms":
-            return AboutApartmentBlockHandler("Количество комнат:")
+            return AboutApartmentBlockHandler("Количество комнат")
         elif self.key == "area of apartment":
-            return AboutApartmentBlockHandler("Общая площадь:")
+            return AboutApartmentBlockHandler("Общая площадь")
         elif self.key == "number of floors":
             return NFloorsHandler()
         elif self.key == "apartment floor":
@@ -93,23 +100,23 @@ class Distributor:
         elif self.key == "price":
             return PriceHandler()
         elif self.key == "repair":
-            return AboutApartmentBlockHandler("Ремонт:")
+            return AboutApartmentBlockHandler("Ремонт")
         elif self.key == "bathroom":
-            return AboutApartmentBlockHandler("Санузел:")
+            return AboutApartmentBlockHandler("Санузел")
         elif self.key == "view from the windows":
-            return AboutApartmentBlockHandler("Вид из окон:")
+            return AboutApartmentBlockHandler("Окна")
         elif self.key == "terrace":
-            return AboutApartmentBlockHandler("Балкон или лоджия:")
+            return AboutApartmentBlockHandler("Балкон или лоджия")
         elif self.key == "year of construction":
-            return AboutHouseBlockHandler("Год постройки:")
+            return AboutHouseBlockHandler("Год постройки")
         elif self.key == "elevator":
-            return AboutHouseBlockHandler("Пассажирский лифт:")
+            return AboutHouseBlockHandler("Пассажирский лифт")
         elif self.key == "extra":
-            return AboutHouseBlockHandler("В доме:")
+            return AboutHouseBlockHandler("В доме")
         elif self.key == "type of house":
-            return AboutApartmentBlockHandler("Тип дома:")
+            return AboutApartmentBlockHandler("Тип дома")
         elif self.key == "parking":
-            return AboutApartmentBlockHandler("Парковка:")
+            return AboutApartmentBlockHandler("Парковка")
         else:
             print("Встречен параметр, у которого отсутствует обработчик, параметр:", self.key)
             return EmptyHandler()

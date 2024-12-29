@@ -1,7 +1,7 @@
 # Post.py
 from bs4 import BeautifulSoup
 import requests
-from research.Parsing.Handler import Distributor
+from Parsing.Handler import Distributor
 
 
 class Post:

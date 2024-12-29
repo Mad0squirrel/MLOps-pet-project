@@ -3,11 +3,11 @@ import time
 import bs4
 import requests
 import random
-from research.Parsing.Post import Post
+from Parsing.Post import Post
 
 
 class Page:
-    LOOP_DELAY = 20
+    LOOP_DELAY = 25
 
     def __init__(self, url, page_number, session, headers, proxies):
         self.url = url
