@@ -9,7 +9,7 @@ from Parsing.Page import Page
 
 
 class AvitoParser:
-    LOOP_DELAY = 25
+    LOOP_DELAY = 2
 
     def __init__(self):
         self.url = None
@@ -32,19 +32,18 @@ class AvitoParser:
             html = request.text
             soup = bs4.BeautifulSoup(html, "lxml")
             list_page_buttons = soup.select_one("div.js-pages.pagination-pagination-Oz4Ri").select('span')
-            # page_numbers = []
-            # for button in list_page_buttons:
-            #     try:
-            #         page_numbers.append(int(button.text))
-            #     except ValueError:
-            #         continue
+            page_numbers = []
+            for button in list_page_buttons:
+                try:
+                    page_numbers.append(int(button.text))
+                except ValueError:
+                    continue
 
-            # if not page_numbers:
-            #     print("Номера страниц не найдены")
-            #     return None
+            if not page_numbers:
+                print("Номера страниц не найдены")
+                return None
 
-            # return max(page_numbers)
-            return 3
+            return max(page_numbers)
         except requests.exceptions.ConnectionError:
             print("Отсутствует соединение")
             return None
@@ -89,5 +88,5 @@ class AvitoParser:
                 print(f"Ошибка при получении данных для страницы {number_page}. Останавливаю парсинг.")
                 return
             self.save_data(data)
-            delay = AvitoParser.LOOP_DELAY + random.uniform(1, 5)
+            delay = AvitoParser.LOOP_DELAY + random.uniform(1, 3)
             time.sleep(delay)

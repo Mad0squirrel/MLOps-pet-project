@@ -67,11 +67,9 @@ class ApartmentFloorHandler(AbstractHandler):
 
 class PriceHandler(AbstractHandler):
     def get_info(self, soup: bs4.BeautifulSoup) -> str or None:
-        text = soup.text
-        index_begin_price = re.search("Пожаловаться", text).span()[1]
-        index_end_price = re.search("₽", text[index_begin_price:]).span()[0] + index_begin_price
-        price = text[index_begin_price: index_end_price]
-        return re.sub(r"\D", "", price)
+        price_meta = soup.find("span", {"itemprop": "price"})
+        price = price_meta.get("content")
+        return price
 
 
 class Distributor:
