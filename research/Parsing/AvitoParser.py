@@ -14,7 +14,6 @@ class AvitoParser:
     def __init__(self):
         self.url = None
         self.file_name = None
-        self.cookies = None
         self.headers = None
         self.params = None
         self.proxies = None
@@ -69,7 +68,6 @@ class AvitoParser:
                 configs = json.load(read_f)
             self.url = configs['url']
             self.file_name = configs['file_name']
-            self.cookies = configs['cookies']
             self.headers = configs['headers']
             self.params = configs['params']
             self.proxies = configs['proxies']
