@@ -9,7 +9,7 @@ from Parsing.Page import Page
 
 
 class AvitoParser:
-    LOOP_DELAY = 2
+    LOOP_DELAY = 5
 
     def __init__(self):
         self.url = None
@@ -88,5 +88,5 @@ class AvitoParser:
                 print(f"Ошибка при получении данных для страницы {number_page}. Останавливаю парсинг.")
                 return
             self.save_data(data)
-            delay = AvitoParser.LOOP_DELAY + random.uniform(1, 3)
+            delay = AvitoParser.LOOP_DELAY + random.uniform(1, 5)
             time.sleep(delay)
