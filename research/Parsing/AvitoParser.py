@@ -1,29 +1,82 @@
+"""Module for parsing advertisements from the Avito website.
+
+This module implements the `AvitoParser` class, which is responsible for:
+- Retrieving the number of pages for a specific category or theme.
+- Collecting data from each page.
+- Saving the data to a CSV file.
+
+Settings such as URL, headers, parameters, and proxies are loaded from the `configs.json` file.
+"""
+
 import csv
-import time
 import json
-import requests
-import bs4
 import random
+import time
+
+import bs4
+import requests
+
 from Parsing.Page import Page
 
 
-
 class AvitoParser:
+
+    """Parser of real estate data from the Avito website.
+
+    Attributes
+    ----------
+    url : str or None
+        The URL for parsing.
+    file_name : str or None
+        The name of the file to save parsed data.
+    headers : dict or None
+        The headers for HTTP requests.
+    params : dict or None
+        The parameters for data filtering or processing.
+    proxies : dict or None
+        Proxy settings for HTTP requests.
+    has_headers : bool
+        Indicates if the headers have already been written to the output file.
+    session : requests.Session
+        HTTP session to reuse connections.
+
+    Methods
+    -------
+    get_n_pages() -> int or None
+        Retrieves the number of pages for the given URL.
+    save_data(data: list) -> None
+        Saves parsed data to a CSV file.
+    load_new_configs() -> None
+        Loads configuration settings from a JSON file.
+    start() -> None
+        Starts the parsing process.
+
+    """
+
     LOOP_DELAY = 3
 
     def __init__(self):
-        self.url = None
-        self.file_name = None
-        self.headers = None
-        self.params = None
-        self.proxies = None
-        self.has_headers = False
+        """Initialize a parser."""
+        self.url: str | None = None
+        self.file_name: str | None = None
+        self.headers: dict | None = None
+        self.params: dict | None = None
+        self.proxies: dict | None = None
+        self.has_headers: bool = False
         self.load_new_configs()
-        self.session = requests.Session()
+        self.session: requests.Session = requests.Session()
 
 
 
-    def get_n_pages(self) -> int or None:
+    def get_n_pages(self) -> int | None:
+        """Determine the number of pages available for the given URL.
+
+        Returns
+        -------
+        int or None
+        The maximum page number if found, otherwise None in case of errors.
+
+        """
         try:
             request = self.session.get(self.url, headers=self.headers, proxies=self.proxies)
             if request.status_code != 200:
@@ -49,6 +102,14 @@ class AvitoParser:
             return None
 
     def save_data(self, data: list) -> None:
+        """Save the parsed data into a CSV file.
+
+        Parameters
+        ----------
+        data : list
+            A list of rows (each row is a list) to be written into the file.
+
+        """
         print("Сохранение")
         if not self.has_headers:
             headers = [key for key in self.params if self.params[key]]
@@ -62,6 +123,11 @@ class AvitoParser:
             writer.writerows(data)
 
     def load_new_configs(self) -> None:
+        """Load configuration settings from a JSON file.
+
+        The settings include URL, headers, parameters, and proxy information.
+        If the file is missing or contains errors, an appropriate message is displayed.
+        """
         try:
             with open("Parsing/configs.json", 'r') as read_f:
                 configs = json.load(read_f)
@@ -74,6 +140,12 @@ class AvitoParser:
             print("Отсутствует файл configs.json")
 
     def start(self) -> None:
+        """Initiate the parsing process.
+
+        The method retrieves the number of pages, iterates through each page,
+        extracts data, and saves it to a CSV file. Includes delay between requests
+        to prevent potential blocking by the website.
+        """
         n_pages = self.get_n_pages()
         print(f"Количество страниц: {n_pages}")
         if not n_pages:

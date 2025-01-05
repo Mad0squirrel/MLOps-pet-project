@@ -1,6 +1,7 @@
-import bs4
 import re
 from abc import ABC, abstractmethod
+
+import bs4
 
 
 class AbstractHandler(ABC):

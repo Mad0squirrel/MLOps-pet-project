@@ -1,7 +1,9 @@
+import random
 import time
+
 import bs4
 import requests
-import random
+
 from Parsing.Post import Post
 
 
