@@ -1,8 +1,8 @@
 {
-    "url": "https://www.avito.ru/moskva/kvartiry/prodam-ASgBAgICAUSSA8YQ",
+    "url": "https://www.avito.ru/moskva/kvartiry/prodam-ASgBAgICAUSSA8YQ?context=H4sIAAAAAAAA_wEjANz_YToxOntzOjg6ImZyb21QYWdlIjtzOjc6ImNhdGFsb2ciO312FITcIwAAAA&s=104",
     "file_name": "data.csv",
     "proxies": {
-        "http": "http://185.162.230.144:80"
+        "http": "http://185.162.231.158:80"
     },
     "headers": {
         "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",

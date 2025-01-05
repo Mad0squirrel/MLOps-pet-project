@@ -6,7 +6,7 @@ from Parsing.Post import Post
 
 
 class Page:
-    LOOP_DELAY = 5
+    LOOP_DELAY = 3
 
     def __init__(self, url, page_number, session, headers, proxies):
         self.url = url
@@ -37,7 +37,7 @@ class Page:
             try:
                 post = Post(url, self.session, self.headers, self.proxies)
                 data.append(post.get_data(params))
-                delay = Page.LOOP_DELAY + random.uniform(1, 5)
+                delay = Page.LOOP_DELAY + random.uniform(1, 4)
                 time.sleep(delay)
             except requests.exceptions.ConnectionError:
                 return data
