@@ -1,3 +1,5 @@
+"""Main file."""
+
 from Parsing.AvitoParser import AvitoParser
 
 if __name__ == "__main__":
