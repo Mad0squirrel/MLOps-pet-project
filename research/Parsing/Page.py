@@ -1,3 +1,5 @@
+"""Module for extracting the data from the page of listings."""
+
 import random
 import time
 
@@ -8,9 +10,35 @@ from Parsing.Post import Post
 
 
 class Page:
+    
+    """Represent a single page of listings on the Avito website.
+
+    Attributes
+    ----------
+    url : str
+        The base URL of the page.
+    p_num : int
+        The current page number.
+    session : requests.Session
+        The session used for making HTTP requests.
+    headers : dict
+        The headers used for making HTTP requests.
+    proxies : dict
+        The proxies used for making HTTP requests.
+
+    Methods
+    -------
+    get_urls() -> list
+        Retrieves the URLs of listings from the current page.
+    get_data(params: dict) -> list
+        Retrieves the data for all listings on the current page using the provided parameters.
+        
+    """
+    
     LOOP_DELAY = 3
 
     def __init__(self, url, page_number, session, headers, proxies):
+        """Initialize the Page object with the necessary details."""
         self.url = url
         self.p_num = page_number
         self.session = session
@@ -18,6 +46,17 @@ class Page:
         self.proxies = proxies
 
     def get_urls(self) -> list:
+        """Retrieve the URLs of listings from the current page.
+
+        Sends an HTTP GET request to the specified page and parses the HTML 
+        to extract the URLs of individual listings.
+
+        Returns
+        -------
+        list
+            A list of URLs for the listings on the current page.
+            
+        """
         try:
             request = self.session.get(self.url, params=dict(p=self.p_num), headers=self.headers, proxies=self.proxies)
             html = request.text
@@ -33,6 +72,22 @@ class Page:
             return []
 
     def get_data(self, params: dict) -> list:
+        """Retrieve the data for all listings on the current page.
+
+        For each listing URL obtained from `get_urls`, this method creates a 
+        `Post` object to extract data and returns the combined results.
+
+        Parameters
+        ----------
+        params : dict
+            The parameters used for data extraction in the Post object.
+
+        Returns
+        -------
+        list
+            A list of extracted data for the listings on the current page.
+            
+        """
         urls = self.get_urls()
         data = []
         for url in urls:
