@@ -6,7 +6,7 @@ import time
 import bs4
 import requests
 
-from Parsing.Post import Post
+from parsing.Post import Post
 
 
 class Page:

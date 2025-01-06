@@ -1,7 +1,7 @@
 """Module for extracting data from an individual listing post."""
 from bs4 import BeautifulSoup
 
-from Parsing.Handler import Distributor
+from parsing.Handler import Distributor
 
 
 class Post:

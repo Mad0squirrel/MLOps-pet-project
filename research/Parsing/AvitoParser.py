@@ -16,7 +16,7 @@ import time
 import bs4
 import requests
 
-from Parsing.Page import Page
+from parsing.Page import Page
 
 
 class AvitoParser:

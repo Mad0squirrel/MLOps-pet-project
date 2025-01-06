@@ -1,6 +1,6 @@
 """Main file."""
 
-from Parsing.AvitoParser import AvitoParser
+from parsing.AvitoParser import AvitoParser
 
 if __name__ == "__main__":
     print("Начинается сбор квартир")
