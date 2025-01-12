@@ -36,3 +36,6 @@ mypy-type-checking:
 # Data
 raw-data:
 		$(PYTHON_INTERPRETER) src/data/download_data.py data/raw/data.csv
+
+clean-data:
+		$(PYTHON_INTERPRETER) src/features/clean_raw_data.py data/raw/data.csv data/intermediate/cleaned_data.csv

@@ -1,7 +1,7 @@
 """Script for cleaning data."""
 
 import re
-from typing import Optional, Union
+from typing import Union
 
 import click
 import numpy as np
@@ -27,8 +27,7 @@ NON_NULL_FEATURES = [
 ]
 REPAIR_FEATURE = 'repair'
 TERRACE_FEATURE = 'terrace'
-EXTRA_FEATURE = 'extra'
-NULL_FEATURES = [REPAIR_FEATURE, TERRACE_FEATURE, EXTRA_FEATURE]
+NULL_FEATURES = [REPAIR_FEATURE, TERRACE_FEATURE]
 ALL_FEATURES = NON_NULL_FEATURES + NULL_FEATURES + [ELEVATOR_FEATURE, BATHROOM_FEATURE]
 
 
@@ -93,12 +92,22 @@ def get_street_and_house_from_address(address: str) -> str:
         "пр.": "проезд",
         "ш.": "шоссе",
         "б-р": "бульвар",
+        "пер.": "переулок",
+        "проезд": "проезд",
+        "наб.": "набережная",
+        "пр-д": "проезд",
+        "дер.": "деревня",
+        "туп.": "тупик",
+        "аллея": "аллея",
+        "жилой комплекс": "жилой комплекс",
+        "квартал": "квартал",
     }
     address_parts = address.split(", ")
     street = ""
     house = ""
     building = ""
     ownership = ""
+    only_number = ""
     
     for part in address_parts:
         for old_part, new_part in street_part_map.items():
@@ -107,10 +116,12 @@ def get_street_and_house_from_address(address: str) -> str:
                 break
         if "д." in part:
             house = part.replace("д.", "").strip()
-        if "стр." in part:
+        elif "стр." in part:
             building = part.replace("стр.", "").strip()
-        if "вл." in part:
-            building = part.replace("вл.", "").strip()
+        elif "вл." in part:
+            ownership = part.replace("вл.", "").strip()
+        else:
+            only_number = address.split(", ")[-1]
     
     if street and house:
         return f"{street}, {house}"
@@ -118,6 +129,8 @@ def get_street_and_house_from_address(address: str) -> str:
         return f"{street}, {building}"
     elif street and ownership:
         return f"{street}, {ownership}"
+    elif street and only_number:
+        return f"{street}, {only_number}"
     else:
         return "Улица и номер дома не найдены"
 
@@ -135,7 +148,7 @@ def get_room_count_by_name(room_name: str) -> int:
     """
     if room_name.isdigit():
         return int(room_name)
-    if room_name in ("студия", "своб. планировка"):
+    if room_name in ("студия", "свободная планировка"):
         return 1
     raise ValueError(f"Unknown room type: {room_name}, {type(room_name)}")
 
@@ -164,7 +177,7 @@ def cli(input_feature_file: str, output_feature_file: str) -> None:
     df[ADDRESS_FEATURE] = df[ADDRESS_FEATURE].apply(get_street_and_house_from_address)
     # bathroom
     df[BATHROOM_FEATURE] = df[BATHROOM_FEATURE].fillna("неизвестно")
-    df = df[df[BATHROOM_FEATURE].apply(lambda x: len(x) < 20)] # filter anomaly values
+    df = df[df[BATHROOM_FEATURE].apply(lambda x: len(x) < 30)] # filter anomaly values
     # type of house
     df = df[df[HOUSE_TYPE_FEATURE].apply(lambda x: len(x) < 20)] # filter anomaly values
     # area
@@ -183,9 +196,7 @@ def cli(input_feature_file: str, output_feature_file: str) -> None:
     # elevator
     min_elevator_counts = df[FLOORS_FEATURE].apply(get_min_elevator_count_by_floor_count).values
     df[ELEVATOR_FEATURE] = np.where(df[ELEVATOR_FEATURE].isna(), min_elevator_counts, df[ELEVATOR_FEATURE].values)
-    df[ELEVATOR_FEATURE] = df[ELEVATOR_FEATURE].astype(np.int64)
-    # extra
-    df[EXTRA_FEATURE] = df[EXTRA_FEATURE] == "нет"
+    df[ELEVATOR_FEATURE] = df[ELEVATOR_FEATURE].replace({'нет': 0}).astype(np.int64)
     # save
     df[ALL_FEATURES].to_csv(output_feature_file, index=False)
     # logging
