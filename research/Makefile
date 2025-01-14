@@ -39,3 +39,9 @@ raw-data:
 
 clean-data:
 		$(PYTHON_INTERPRETER) src/features/clean_raw_data.py data/raw/data.csv data/intermediate/cleaned_data.csv
+
+amenities:
+		$(PYTHON_INTERPRETER) src/features/download_amenities.py -a pub -a cafe -a fast_food -a restaurant data/external/eat.json
+		$(PYTHON_INTERPRETER) src/features/download_amenities.py -a college -a kindergarten -a library -a school -a university data/external/edu.json
+		$(PYTHON_INTERPRETER) src/features/download_amenities.py -a cinema -a fountain -a theatre data/external/culture.json
+		$(PYTHON_INTERPRETER) src/features/download_amenities.py -a clinic -a hospital data/external/health.json
