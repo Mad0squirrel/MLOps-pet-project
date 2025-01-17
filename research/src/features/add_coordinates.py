@@ -24,8 +24,14 @@ LONGITUDE_INDEX = 2
 def get_coordinates_with_geoapify_by_address(address: str) -> Optional[tuple[float, float]]:
     """Get coordinates with geocoding api.
 
-    :param address: street and house number
-    :return: latitude and longitude
+    Parameters
+    ----------
+     address: str
+    
+    Returns
+    -------
+     latitude and longitude: Optional[tuple[float, float]]
+    
     """
     if GEOAPIFY_TOKEN == "":
         raise ValueError("No GEOAPIFY_TOKEN in environment")
@@ -34,7 +40,7 @@ def get_coordinates_with_geoapify_by_address(address: str) -> Optional[tuple[flo
         params={
             "text": address,
             "lang": "en",
-            "filter": "circle:55.56282,37.53548,20000",
+            "filter": "circle:37.62354,55.75197,40000",
             "format": "json",
             "apiKey": GEOAPIFY_TOKEN,
         },
@@ -85,7 +91,7 @@ def cli(input_feature_file: str, output_feature_file: str) -> None:
         df.iat[index, LONGITUDE_INDEX] = lon
     click.echo("100%")
     df.to_csv(output_feature_file, index=False)
-    
+
     
 if __name__ == "__main__":
     cli()

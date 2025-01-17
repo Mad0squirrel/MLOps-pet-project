@@ -12,8 +12,7 @@ def cli(output_dataset_file: str) -> None:
 
      Parameters
      ----------
-     output_dataset_file : str
-        Out filepath.
+      output_dataset_file : str
     
      Returns
      -------

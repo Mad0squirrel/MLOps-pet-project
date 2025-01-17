@@ -170,6 +170,7 @@ def cli(input_feature_file: str, output_feature_file: str) -> None:
     
     """
     df = pd.read_csv(input_feature_file)
+    df.drop_duplicates(inplace=True)
     
     for feature in NON_NULL_FEATURES:
         df = df[df[feature].notna()]
