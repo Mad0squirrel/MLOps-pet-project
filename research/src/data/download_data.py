@@ -21,7 +21,7 @@ def cli(output_dataset_file: str) -> None:
      nothing
 
      """
-     df = pd.read_csv(DATASET_URL, delimiter=';', on_bad_lines='skip')
+     df = pd.read_csv(DATASET_URL, delimiter=';', quotechar='"', doublequote=True)
      df.to_csv(output_dataset_file, index=False, quoting=csv.QUOTE_MINIMAL)
      
 if __name__ == "__main__":
