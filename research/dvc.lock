@@ -1,0 +1,14 @@
+schema: '2.0'
+stages:
+  download_raw_data:
+    cmd: poetry run python src/data/download_data.py data/raw/data.csv
+    deps:
+    - path: src/data/download_data.py
+      hash: md5
+      md5: 42ef39ad594fd97283d38c6a962e11f1
+      size: 663
+    outs:
+    - path: data/raw/data.csv
+      hash: md5
+      md5: d5116f9f7d9e6feb6c73d62cf47b4807
+      size: 2186148

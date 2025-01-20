@@ -2,7 +2,7 @@ stages:
   download_raw_data:
     cmd: poetry run python src/data/download_data.py data/raw/data.csv
     deps:
-      - src/data/download.py
+      - src/data/download_data.py
     outs:
       - data/raw/data.csv
 

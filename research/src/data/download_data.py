@@ -1,5 +1,7 @@
 """Script for downloading new dataset."""
 
+import csv
+
 import click
 import pandas as pd
 
@@ -20,7 +22,7 @@ def cli(output_dataset_file: str) -> None:
 
      """
      df = pd.read_csv(DATASET_URL, delimiter=';', on_bad_lines='skip')
-     df.to_csv(output_dataset_file, index=False)
+     df.to_csv(output_dataset_file, index=False, quoting=csv.QUOTE_MINIMAL)
      
 if __name__ == "__main__":
     cli()
