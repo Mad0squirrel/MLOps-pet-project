@@ -38,10 +38,10 @@ stages:
 
   finalize_data:
     cmd: >
-      poetry run python src/features/finalize_data.py data/interim/cleaned_data.csv data/external/geo_data.csv data/processed/data.csv 
+      poetry run python src/features/finalize_data.py data/intermediate/cleaned_data.csv data/external/geo_data.csv data/processed/data.csv 
       -af data/external/eat.json -af data/external/culture.json -af data/external/edu.json -af data/external/health.json
     deps:
-      - data/interim/cleaned_data.csv
+      - data/intermediate/cleaned_data.csv
       - data/external/geo_data.csv
       - data/external/eat.json
       - data/external/culture.json

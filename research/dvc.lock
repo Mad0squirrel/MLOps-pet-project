@@ -5,10 +5,110 @@ stages:
     deps:
     - path: src/data/download_data.py
       hash: md5
-      md5: 42ef39ad594fd97283d38c6a962e11f1
-      size: 663
+      md5: 1b80b8ae2baa0b73579c14b8b6b63a7e
+      size: 703
     outs:
     - path: data/raw/data.csv
       hash: md5
-      md5: d5116f9f7d9e6feb6c73d62cf47b4807
-      size: 2186148
+      md5: f08d030d493a161f4349413a344d7f42
+      size: 2345425
+  clean_data:
+    cmd: poetry run python src/features/clean_raw_data.py data/raw/data.csv data/intermediate/cleaned_data.csv
+    deps:
+    - path: data/raw/data.csv
+      hash: md5
+      md5: f08d030d493a161f4349413a344d7f42
+      size: 2345425
+    - path: src/features/clean_raw_data.py
+      hash: md5
+      md5: 17b4a5877ad952c334be49889ac71d3f
+      size: 6400
+    outs:
+    - path: data/intermediate/cleaned_data.csv
+      hash: md5
+      md5: c6f0e861d842b12246de972294b3b4ac
+      size: 420754
+  download_amenities:
+    cmd: "poetry run python src/features/download_amenities.py -a pub -a cafe -a fast_food
+      -a restaurant data/external/eat.json && poetry run python src/features/download_amenities.py
+      -a college -a kindergarten -a library -a school -a university data/external/edu.json
+      && poetry run python src/features/download_amenities.py -a cinema -a fountain
+      -a theatre data/external/culture.json && poetry run python src/features/download_amenities.py
+      -a clinic -a hospital data/external/health.json\n"
+    deps:
+    - path: src/features/download_amenities.py
+      hash: md5
+      md5: ec25308237088726b73594b09bd0e1b5
+      size: 1476
+    outs:
+    - path: data/external/culture.json
+      hash: md5
+      md5: 0a1af2a3869a0e82acc457bda6d082de
+      size: 234161
+    - path: data/external/eat.json
+      hash: md5
+      md5: 928ce73ad19ea2caed2e4f61c109f7f2
+      size: 5323796
+    - path: data/external/edu.json
+      hash: md5
+      md5: 5aa31adddceb8cbba851003c4849ad22
+      size: 737858
+    - path: data/external/health.json
+      hash: md5
+      md5: 33806e5c5bd47828d670386066445999
+      size: 697131
+  add_coordinates:
+    cmd: poetry run python src/features/add_coordinates.py data/intermediate/cleaned_data.csv
+      data/external/geo_data.csv
+    deps:
+    - path: data/intermediate/cleaned_data.csv
+      hash: md5
+      md5: c6f0e861d842b12246de972294b3b4ac
+      size: 420754
+    - path: src/features/add_coordinates.py
+      hash: md5
+      md5: e1275e16b3aaf0a34e9d202e20a7f97b
+      size: 2650
+    outs:
+    - path: data/external/geo_data.csv
+      hash: md5
+      md5: bd3b8647019673edd333a2e13ea45978
+      size: 129697
+  finalize_data:
+    cmd: "poetry run python src/features/finalize_data.py data/intermediate/cleaned_data.csv
+      data/external/geo_data.csv data/processed/data.csv  -af data/external/eat.json
+      -af data/external/culture.json -af data/external/edu.json -af data/external/health.json\n"
+    deps:
+    - path: data/external/culture.json
+      hash: md5
+      md5: 0a1af2a3869a0e82acc457bda6d082de
+      size: 234161
+    - path: data/external/eat.json
+      hash: md5
+      md5: 928ce73ad19ea2caed2e4f61c109f7f2
+      size: 5323796
+    - path: data/external/edu.json
+      hash: md5
+      md5: 5aa31adddceb8cbba851003c4849ad22
+      size: 737858
+    - path: data/external/geo_data.csv
+      hash: md5
+      md5: bd3b8647019673edd333a2e13ea45978
+      size: 129697
+    - path: data/external/health.json
+      hash: md5
+      md5: 33806e5c5bd47828d670386066445999
+      size: 697131
+    - path: data/intermediate/cleaned_data.csv
+      hash: md5
+      md5: c6f0e861d842b12246de972294b3b4ac
+      size: 420754
+    - path: src/features/finalize_data.py
+      hash: md5
+      md5: 414642fe5d66fc8ba7b7a49a329ca558
+      size: 3903
+    outs:
+    - path: data/processed/data.csv
+      hash: md5
+      md5: 3502547cdcaaa4372e4fe17b6be384ae
+      size: 406116
