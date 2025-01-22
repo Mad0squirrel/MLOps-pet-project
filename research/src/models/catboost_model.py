@@ -34,6 +34,9 @@ def cli(dataset_file: str) -> None:
     
     """
     df = pd.read_csv(dataset_file)
+    
+    df = df[df[TARGET] < 125_017_120]
+    
     x = df.drop(columns=[TARGET])
     y = df[TARGET]
     x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=RANDOM_STATE)
