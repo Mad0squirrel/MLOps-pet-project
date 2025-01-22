@@ -182,7 +182,7 @@ def cli(input_feature_file: str, output_feature_file: str) -> None:
     # type of house
     df = df[df[HOUSE_TYPE_FEATURE].apply(lambda x: len(x) < 20)] # filter anomaly values
     # area
-    df[AREA_FEATURE] = df[AREA_FEATURE].apply(lambda x: float(x[:-3])).astype(np.float64)
+    df[AREA_FEATURE] = df[AREA_FEATURE].apply(lambda x: round(float(x[:-3]))).astype(int)
     # room count
     df = df[df[ROOMS_FEATURE] != "многокомнатная"]
     df[ROOMS_FEATURE] = df[ROOMS_FEATURE].apply(get_room_count_by_name)

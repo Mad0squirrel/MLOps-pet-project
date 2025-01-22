@@ -21,13 +21,13 @@ stages:
       size: 2345425
     - path: src/features/clean_raw_data.py
       hash: md5
-      md5: 17b4a5877ad952c334be49889ac71d3f
+      md5: ecb8e9dc76e4de4ab8b25f57567a0dbe
       size: 6400
     outs:
     - path: data/intermediate/cleaned_data.csv
       hash: md5
-      md5: c6f0e861d842b12246de972294b3b4ac
-      size: 420754
+      md5: 140544af28c3402dca71bbc806db49ad
+      size: 414884
   download_amenities:
     cmd: "poetry run python src/features/download_amenities.py -a pub -a cafe -a fast_food
       -a restaurant data/external/eat.json && poetry run python src/features/download_amenities.py
@@ -63,8 +63,8 @@ stages:
     deps:
     - path: data/intermediate/cleaned_data.csv
       hash: md5
-      md5: c6f0e861d842b12246de972294b3b4ac
-      size: 420754
+      md5: 140544af28c3402dca71bbc806db49ad
+      size: 414884
     - path: src/features/add_coordinates.py
       hash: md5
       md5: e1275e16b3aaf0a34e9d202e20a7f97b
@@ -101,8 +101,8 @@ stages:
       size: 697131
     - path: data/intermediate/cleaned_data.csv
       hash: md5
-      md5: c6f0e861d842b12246de972294b3b4ac
-      size: 420754
+      md5: 140544af28c3402dca71bbc806db49ad
+      size: 414884
     - path: src/features/finalize_data.py
       hash: md5
       md5: 414642fe5d66fc8ba7b7a49a329ca558
@@ -110,5 +110,5 @@ stages:
     outs:
     - path: data/processed/data.csv
       hash: md5
-      md5: 3502547cdcaaa4372e4fe17b6be384ae
-      size: 406116
+      md5: 726754c1051d95628025cbc579a2b049
+      size: 400924
