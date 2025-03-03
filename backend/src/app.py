@@ -30,7 +30,6 @@ async def lifespan(application: FastAPI) -> AsyncIterator[None]:
     """
     application.state.model = load_model(app_config)
     logger.info("Loaded model from mlflow")
-    logger.info("Loaded districts data from static dir")
     application.state.amenities_data = load_amenities_data(app_config.AMENITY_DIR_PATH)
     logger.info("Loaded amenities data from static dir")
     yield

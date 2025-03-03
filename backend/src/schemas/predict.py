@@ -57,7 +57,7 @@ class BasePredictionIn(BaseModel):
 class PredictionWithAddressIn(BasePredictionIn):
     """Prediction class with address field."""
 
-    address: str = "г. Пермь, ул. Ординская, д. 10, корп. 2"
+    address: str = "г. Москва, ул. Ординская, д. 10, корп. 2"
 
 
 class PredictionWithCoordinatesIn(BasePredictionIn):

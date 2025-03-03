@@ -1,7 +1,6 @@
 import Map, { MapRef, Marker, MapLayerMouseEvent, FullscreenControl, NavigationControl, Popup} from 'react-map-gl/maplibre';
 import {Dispatch, SetStateAction, useRef, useState} from "react";
 import MapToggleButton from "../map-toggle-button/MapToggleButton.tsx";
-import logoHexagon from './../../assets/hexagon.svg';
 import logoHouse from './../../assets/house.svg';
 import logoParams from './../../assets/params.svg';
 import logoBars from './../../assets/bars.svg';
@@ -28,7 +27,7 @@ const initialMapView: MapView = {
     longitude: 37.62354,
     latitude: 55.75197,
     zoom: 12,
-    pitch: 0
+    patch: 0
 }
 
 const initialHouseParams: HouseParams = {
@@ -142,9 +141,9 @@ const ApplicationMap = () => {
             longitude={mapview.longitude}
             latitude={mapview.latitude}
             zoom={mapview.zoom}
-            pitch={mapview.pitch}
+            pitch={mapview.patch}
             style={{height: "100%", width: "100%"}}
-            onMove={(e) => setMapview({longitude: e.viewState.longitude, latitude: e.viewState.latitude,zoom: e.viewState.zoom, pitch: e.viewState.pitch})}
+            onMove={(e) => setMapview({longitude: e.viewState.longitude, latitude: e.viewState.latitude,zoom: e.viewState.zoom, patch: e.viewState.pitch})}
             mapStyle={BASE_MAP_URL}
             ref={mapRef}
             onLoad={addSourcesAndLayers}
