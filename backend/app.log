@@ -30,3 +30,6 @@
 2025-03-03 13:56:04,198 - INFO - Found credentials in environment variables.
 2025-03-03 13:56:06,043 - INFO - Loaded model from mlflow
 2025-03-03 13:56:06,044 - INFO - Loaded amenities data from static dir
+2025-03-03 14:02:31,387 - INFO - Found credentials in environment variables.
+2025-03-03 14:02:32,694 - INFO - Loaded model from mlflow
+2025-03-03 14:02:32,694 - INFO - Loaded amenities data from static dir
