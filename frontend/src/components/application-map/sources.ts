@@ -1,8 +1,18 @@
-import {apartmentsDataPath, apartmentsSourceId} from "./constants.ts";
+import {apartmentsDataPath, apartmentsSourceId, districtsDataPath, districtsSourceId} from "./constants.ts";
 import {SourceSpecification} from "maplibre-gl";
 
 
 type sourceSpec = () => [string, SourceSpecification];
+
+const createDistrictsSourceSpec: sourceSpec = () => {
+    return  [
+        districtsSourceId,
+        {
+            type: "geojson",
+            data: districtsDataPath,
+        }
+    ]
+}
 
 const createApartmentsSourceSpec: sourceSpec = () => {
     return  [
@@ -15,4 +25,4 @@ const createApartmentsSourceSpec: sourceSpec = () => {
 }
 
 
-export {createApartmentsSourceSpec};
+export {createDistrictsSourceSpec, createApartmentsSourceSpec};

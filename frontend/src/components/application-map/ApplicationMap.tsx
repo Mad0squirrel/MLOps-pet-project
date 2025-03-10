@@ -1,17 +1,20 @@
 import Map, { MapRef, Marker, MapLayerMouseEvent, FullscreenControl, NavigationControl, Popup} from 'react-map-gl/maplibre';
 import {Dispatch, SetStateAction, useRef, useState} from "react";
 import MapToggleButton from "../map-toggle-button/MapToggleButton.tsx";
+import logoHexagon from './../../assets/hexagon.svg';
 import logoHouse from './../../assets/house.svg';
 import logoParams from './../../assets/params.svg';
 import logoBars from './../../assets/bars.svg';
-import {createApartmentsSourceSpec} from "./sources.ts";
-import {createApartmentsHeatmapLayerSpec, createApartmentsLayerSpec} from "./layers.ts";
+import {createApartmentsSourceSpec, createDistrictsSourceSpec} from "./sources.ts";
+import {createApartmentsHeatmapLayerSpec, createApartmentsLayerSpec, createDistrictsLayerSpec} from "./layers.ts";
 import {
     apartmentsApartmentField, apartmentsHeatmapLayerId,
     apartmentsHouseField,
     apartmentsLayerId, apartmentsPriceField,
+    districtNameField,
+    districtsLayerId
 } from "./constants.ts";
-import {ApartmentPopup} from "../../types/popup.ts";
+import {ApartmentPopup, DistrictPopup} from "../../types/popup.ts";
 import {OwnHouse} from "../../types/own-house.ts";
 import {MapView} from "../../types/mapview.ts";
 import "./ApplicationMap.css";
@@ -50,10 +53,12 @@ const initialHouseParams: HouseParams = {
 const ApplicationMap = () => {
     const mapRef = useRef<MapRef>(null);
     const [mapview, setMapview] = useState<MapView>(initialMapView);
+    const [visibleDistricts, setVisibleDistricts] = useState(false);
     const [visibleApartments, setVisibleApartments] = useState(false);
     const [visibleParameters, setVisibleParameters] = useState(false);
     const [selectMarker, setSelectMarker] = useState(false);
     const [ownHouse, setOwnHouse] = useState<OwnHouse | null>(null)
+    const [districtPopup, setDistrictPopup] = useState<DistrictPopup | null>(null);
     const [apartmentPopup, setApartmentPopup] = useState<ApartmentPopup | null>(null);
     const [houseParams, setHouseParams] = useState<HouseParams>(initialHouseParams);
     const [loading, setLoading] = useState(false);
@@ -82,10 +87,24 @@ const ApplicationMap = () => {
 
     const addSourcesAndLayers = () => {
         const map = getMap();
+        const districtsLayerVisibility = visibleDistricts? "visible": "none";
         const apartmentsLayerVisibility = visibleApartments? "visible": "none";
+        map.addSource(...createDistrictsSourceSpec());
+        map.addLayer(createDistrictsLayerSpec(districtsLayerVisibility));
         map.addSource(...createApartmentsSourceSpec());
         map.addLayer(createApartmentsHeatmapLayerSpec(apartmentsLayerVisibility));
         map.addLayer(createApartmentsLayerSpec(apartmentsLayerVisibility));
+        map.on('contextmenu', districtsLayerId, (e) => {
+            if (e.features == undefined){
+                return
+            }
+            const districtPopupData: DistrictPopup = {
+                longitude: e.lngLat.lng,
+                latitude: e.lngLat.lat,
+                name: e.features[0].properties[districtNameField],
+            }
+            setDistrictPopup(districtPopupData)
+        });
         map.on('click', apartmentsLayerId, (e) => {
             if (e.features == undefined){
                 return
@@ -153,6 +172,12 @@ const ApplicationMap = () => {
             <NavigationControl/>
             <div className="map__buttons">
                 <MapToggleButton
+                    isActive={visibleDistricts}
+                    image={logoHexagon}
+                    hint_message={"Отобразить/скрыть районы города"}
+                    onClick={() => toggleLayerView(visibleDistricts, [districtsLayerId], setVisibleDistricts)}
+                />
+                <MapToggleButton
                     isActive={selectMarker}
                     image={logoHouse}
                     hint_message={"Выбрать дом"}
@@ -173,6 +198,19 @@ const ApplicationMap = () => {
                     onClick={() => toggleLayerView(visibleApartments, [apartmentsHeatmapLayerId, apartmentsLayerId], setVisibleApartments)}
                 />
             </div>
+            {
+                districtPopup && (
+                    <Popup
+                        longitude={districtPopup.longitude}
+                        latitude={districtPopup.latitude}
+                        anchor="bottom"
+                        onClose={() => setDistrictPopup(null)}
+                        closeButton={false}
+                    >
+                        {districtPopup.name}
+                    </Popup>
+                )
+            }
             {
                 ownHouse && (
                     <Marker

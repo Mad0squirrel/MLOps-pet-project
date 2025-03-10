@@ -1,4 +1,8 @@
 import {
+    districtsColorOpacity,
+    districtsLayerId,
+    districtsSourceId,
+    districtColorField,
     apartmentsLayerId,
     apartmentsSourceId,
     apartmentsPriceField, apartmentsHeatmapLayerId
@@ -7,6 +11,22 @@ import {AddLayerObject} from "maplibre-gl";
 
 
 type layerSpec = (visibility: "visible" | "none") => AddLayerObject;
+
+const createDistrictsLayerSpec: layerSpec = (visibility)  => {
+    return  {
+        id: districtsLayerId,
+        source: districtsSourceId,
+        type: "fill-extrusion",
+        layout: {
+            visibility: visibility
+        },
+        "paint": {
+            'fill-extrusion-color': ["get", districtColorField],
+            'fill-extrusion-height': 1,
+            'fill-extrusion-opacity': districtsColorOpacity,
+        }
+    }
+}
 
 const createApartmentsHeatmapLayerSpec: layerSpec = (visibility)  => {
     return  {
@@ -127,4 +147,4 @@ const createApartmentsLayerSpec: layerSpec = (visibility)  => {
 }
 
 
-export {createApartmentsHeatmapLayerSpec, createApartmentsLayerSpec};
+export {createDistrictsLayerSpec, createApartmentsHeatmapLayerSpec, createApartmentsLayerSpec};

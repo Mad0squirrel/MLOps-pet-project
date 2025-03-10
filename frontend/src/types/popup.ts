@@ -1,3 +1,9 @@
+interface DistrictPopup{
+    longitude: number,
+    latitude: number,
+    name: string
+}
+
 interface ApartmentInfo{
     apartment: string,
     price: number
@@ -12,4 +18,4 @@ interface ApartmentPopup{
 }
 
 
-export type {ApartmentPopup, ApartmentInfo};
+export type {DistrictPopup, ApartmentPopup, ApartmentInfo};

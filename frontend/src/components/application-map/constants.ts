@@ -1,6 +1,7 @@
 const districtsSourceId = "districts-source";
 const districtsLayerId = "districts-layer";
 const districtsColorOpacity = 0.3;
+const districtsDataPath = "/perm_districts.geojson";
 const districtColorField = "color";
 const districtNameField = "name";
 
@@ -13,5 +14,5 @@ const apartmentsApartmentField = "apartment";
 const apartmentsHouseField = "house";
 
 
-export {districtsLayerId, districtsSourceId, districtsColorOpacity, districtColorField, districtNameField,
+export {districtsLayerId, districtsSourceId, districtsDataPath, districtsColorOpacity, districtColorField, districtNameField,
     apartmentsSourceId, apartmentsLayerId, apartmentsDataPath, apartmentsPriceField, apartmentsHeatmapLayerId, apartmentsApartmentField, apartmentsHouseField};
