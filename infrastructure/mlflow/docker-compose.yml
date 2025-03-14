@@ -1,6 +1,7 @@
 version: '3'
 services:
   mlflow-web:
+    container_name: mlflow-web
     build:
       context: .
       dockerfile: Dockerfile
@@ -17,9 +18,12 @@ services:
       -h 0.0.0.0
     depends_on:
       - mlflow-db
+    networks:
+      - app_network
 
   mlflow-db:
     image: 'postgres:14'
+    container_name: mlflow-db
     ports:
       - '5432:5432'
     environment:
@@ -28,9 +32,12 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - 'mlflow-db-data:/var/lib/postgresql/data'
-    
+    networks:
+      - app_network
+
   pgadmin:
     image: dpage/pgadmin4:8.4
+    container_name: pgadmin
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
@@ -40,7 +47,13 @@ services:
     ports:
       - "5050:80"
     restart: unless-stopped
+    networks:
+      - app_network
 
 volumes:
   mlflow-db-data:
   pgadmin-data:
+
+networks:
+  app_network:
+    external: true

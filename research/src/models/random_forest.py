@@ -48,7 +48,7 @@ def cli(dataset_file: str) -> None:
     mlflow.set_experiment("ml-project")
     with mlflow.start_run(run_name="random-forest"):
 
-        rf_model = RandomForestRegressor(n_estimators=100, max_depth=15, random_state=RANDOM_STATE)
+        rf_model = RandomForestRegressor(n_estimators=100, max_depth=10, random_state=RANDOM_STATE)
         rf_model.fit(x_train, y_train)
         predicts = rf_model.predict(x_test)
 

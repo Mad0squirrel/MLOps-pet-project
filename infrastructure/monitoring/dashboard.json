@@ -38,7 +38,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "ddog1ispl3jswd"
+          "uid": "PBFA97CFB590B2093"
         },
         "fieldConfig": {
           "defaults": {
@@ -118,7 +118,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "ddog1ispl3jswd"
+              "uid": "PBFA97CFB590B2093"
             },
             "disableTextWrap": false,
             "editorMode": "builder",
@@ -138,7 +138,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "ddog1ispl3jswd"
+          "uid": "PBFA97CFB590B2093"
         },
         "fieldConfig": {
           "defaults": {
@@ -185,7 +185,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "ddog1ispl3jswd"
+              "uid": "PBFA97CFB590B2093"
             },
             "disableTextWrap": false,
             "editorMode": "builder",
@@ -205,7 +205,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "ddog1ispl3jswd"
+          "uid": "PBFA97CFB590B2093"
         },
         "fieldConfig": {
           "defaults": {
@@ -252,7 +252,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "ddog1ispl3jswd"
+              "uid": "PBFA97CFB590B2093"
             },
             "disableTextWrap": false,
             "editorMode": "builder",
@@ -285,7 +285,7 @@
       {
         "datasource": {
           "type": "loki",
-          "uid": "ddow1yjez54aob"
+          "uid": "feft35c5ie6tcc"
         },
         "gridPos": {
           "h": 8,
@@ -308,7 +308,7 @@
           {
             "datasource": {
               "type": "loki",
-              "uid": "ddow1yjez54aob"
+              "uid": "feft35c5ie6tcc"
             },
             "editorMode": "builder",
             "expr": "{logger=\"uvicorn.access\"} |= ``",
@@ -322,7 +322,7 @@
       {
         "datasource": {
           "type": "loki",
-          "uid": "ddow1yjez54aob"
+          "uid": "feft35c5ie6tcc"
         },
         "gridPos": {
           "h": 8,
@@ -345,7 +345,7 @@
           {
             "datasource": {
               "type": "loki",
-              "uid": "ddow1yjez54aob"
+              "uid": "feft35c5ie6tcc"
             },
             "editorMode": "builder",
             "expr": "{logger=\"src.logger\"} |= ``",
@@ -372,7 +372,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "ddog1ispl3jswd"
+          "uid": "PBFA97CFB590B2093"
         },
         "fieldConfig": {
           "defaults": {
@@ -452,7 +452,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "ddog1ispl3jswd"
+              "uid": "PBFA97CFB590B2093"
             },
             "disableTextWrap": false,
             "editorMode": "builder",
@@ -472,7 +472,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "ddog1ispl3jswd"
+          "uid": "PBFA97CFB590B2093"
         },
         "fieldConfig": {
           "defaults": {
@@ -552,7 +552,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "ddog1ispl3jswd"
+              "uid": "PBFA97CFB590B2093"
             },
             "disableTextWrap": false,
             "editorMode": "builder",
@@ -572,7 +572,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "ddog1ispl3jswd"
+          "uid": "PBFA97CFB590B2093"
         },
         "fieldConfig": {
           "defaults": {
@@ -652,7 +652,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "ddog1ispl3jswd"
+              "uid": "PBFA97CFB590B2093"
             },
             "disableTextWrap": false,
             "editorMode": "builder",
@@ -685,7 +685,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "ddog1ispl3jswd"
+          "uid": "PBFA97CFB590B2093"
         },
         "fieldConfig": {
           "defaults": {
@@ -735,7 +735,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "ddog1ispl3jswd"
+              "uid": "PBFA97CFB590B2093"
             },
             "disableTextWrap": false,
             "editorMode": "builder",

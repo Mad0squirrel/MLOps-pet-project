@@ -45,7 +45,7 @@ class BasePredictionIn(BaseModel):
     number_of_floors: int
     type_of_house: HouseType
     number_of_rooms: int
-    area_of_apartment: float
+    area_of_apartment: int
     apartment_floor: int
     repair: RepairType
     terrace: TerraceType

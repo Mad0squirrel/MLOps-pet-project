@@ -10,6 +10,7 @@ scrape_configs:
   metrics_path: /metrics
   scheme: http
   follow_redirects: true
+  enable_http2: true
   static_configs:
    - targets:
       - prometheus:9090
@@ -18,5 +19,5 @@ scrape_configs:
   metrics_path: /metrics
   static_configs:
    - targets:
-      - localhost:5005
-      - host.docker.internal:8000
+      - api:5005
+      # - host.docker.internal:8000

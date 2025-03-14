@@ -45,7 +45,7 @@ def cli(dataset_file: str) -> None:
     mlflow.set_experiment("ml-project")
     with mlflow.start_run(run_name="catboost"):
         
-        catboost_model = CatBoostRegressor(n_estimators=150, max_depth=6, random_state=RANDOM_STATE)
+        catboost_model = CatBoostRegressor(n_estimators=150, max_depth=10, random_state=RANDOM_STATE)
         catboost_model.fit(x_train, y_train, cat_features=CAT_FEATURES)
         predicts = catboost_model.predict(x_test)
         signature = infer_signature(x_test, predicts)

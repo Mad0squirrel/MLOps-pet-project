@@ -3,6 +3,6 @@
 ['remote "minio-storage"']
     url = s3://dvcbucket
     endpointurl = http://localhost:9000
-    access_key_id = Q2kV7QBdLLgBKanUR1T8
-    secret_access_key = nQD56BTO8yaAo80UIkBUAiviiDZVcEkDauUs9Wbx
+    access_key_id = TaWOmkUzcGyGdtAH3rlA
+    secret_access_key = K7lxMxRdf6QquN4mhdSgSCjRJ794XstTrR9PfqAZ
     

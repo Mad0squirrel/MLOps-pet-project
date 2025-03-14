@@ -48,7 +48,7 @@ def make_features_dataframe(
     prediction_data = {
         "lat": lat,
         "lon": lon,
-        "number of floors": apartment_data.number_of_rooms,
+        "number of floors": apartment_data.number_of_floors,
         "type of house": apartment_data.type_of_house.value,
         "number of rooms": apartment_data.number_of_rooms,
         "area of apartment": apartment_data.area_of_apartment,
@@ -60,5 +60,12 @@ def make_features_dataframe(
         "bathroom": apartment_data.bathroom.value,
     }
     prediction_data = dict(**prediction_data, **distance_data)
+
     df = pd.DataFrame(data=[prediction_data], columns=COLUMNS)
+
+    for col in ["eat_500", "eat_1500", "eat_3000", "culture_500", "culture_1500", 
+                "culture_3000", "edu_500", "edu_1500", "edu_3000", "health_500", 
+                "health_1500", "health_3000"]:
+        df[col] = pd.to_numeric(df[col], errors="coerce").fillna(0).astype(int)
+
     return df

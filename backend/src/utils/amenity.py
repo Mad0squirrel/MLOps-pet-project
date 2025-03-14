@@ -82,4 +82,4 @@ def load_amenities_data(dir_path: str) -> List[Dict[str, float]]:
             for item in amenitiy_data:
                 amenitiy_item = dict(lon=item['lon'], lat=item['lat'], type=name)
                 amenities.append(amenitiy_item)
-        return amenities
+    return amenities

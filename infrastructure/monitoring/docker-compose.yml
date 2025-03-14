@@ -11,6 +11,8 @@ services:
       - prometheus_data:/opt/prometheus/data
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
+    networks:
+      - app_network
 
   grafana:
     image: grafana/grafana:latest
@@ -18,14 +20,23 @@ services:
     ports:
       - 3001:3000
     volumes:
-      - ./datasource.yml:/etc/grafana/provisioning/datasource.yml
+      - ./datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
       - grafana_data:/var/lib/grafana
+    networks:
+      - app_network
 
   loki:
     image: grafana/loki:latest
+    container_name: loki
     ports:
       - "3100:3100"
+    networks:
+      - app_network
 
 volumes:
   prometheus_data:
   grafana_data:
+
+networks:
+  app_network:
+    external: true
